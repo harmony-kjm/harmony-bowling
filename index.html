@@ -436,22 +436,23 @@ function App(){
                   {round.number}회차
                 </div>
               </div>
-              {round.date&&(
-                <div style={{display:"inline-flex",alignItems:"center",gap:5,marginTop:5,
-                  background:"linear-gradient(135deg,var(--rose4),var(--rose3))",
-                  border:"1px solid var(--rose3)",borderRadius:20,padding:"3px 12px"}}>
-                  <span style={{fontSize:11}}>📅</span>
-                  <span style={{fontSize:12,fontWeight:700,color:"var(--rose)",whiteSpace:"nowrap"}}>추첨 {round.date}</span>
-                </div>
-              )}
               <div className="header-tagline" style={{fontSize:13,color:"var(--rose2)",marginTop:4,
                 fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",
                 letterSpacing:0.3}}>
                 작은 관심과 참여가 모여 큰 하모니를 만듭니다.
               </div>
             </div>
-            {/* 우측 — 동기화만 */}
-            <div style={{textAlign:"right",flexShrink:0}}>
+            {/* 우측 — 추첨일 + 동기화 */}
+            <div style={{textAlign:"right",flexShrink:0,maxWidth:120}}>
+              {round.date&&(
+                <div style={{display:"inline-flex",alignItems:"center",gap:4,
+                  background:"linear-gradient(135deg,var(--rose4),var(--rose3))",
+                  border:"1px solid var(--rose3)",borderRadius:20,
+                  padding:"4px 10px",marginBottom:4,flexWrap:"wrap",justifyContent:"flex-end"}}>
+                  <span style={{fontSize:10}}>📅</span>
+                  <span style={{fontSize:11,fontWeight:700,color:"var(--rose)",wordBreak:"keep-all"}}>추첨 {round.date}</span>
+                </div>
+              )}
               <div style={{fontSize:10,color:"var(--textMute)",display:"flex",
                 alignItems:"center",gap:4,justifyContent:"flex-end"}}>
                 {syncing?<><Spinner size={10}/><span>동기화중</span></>
