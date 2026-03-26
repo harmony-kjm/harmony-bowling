@@ -206,40 +206,28 @@ function loadLocal(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse
 function saveLocal(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 
 async function fetchParticipants(){
-  return new Promise((resolve)=>{
-    const cbName="harmony_cb_"+Date.now();
-    const script=document.createElement("script");
-    const timeout=setTimeout(()=>{
-      delete window[cbName];
-      if(document.body.contains(script))document.body.removeChild(script);
-      resolve([]);
-    },10000);
-    window[cbName]=(json)=>{
-      clearTimeout(timeout);
-      delete window[cbName];
-      if(document.body.contains(script))document.body.removeChild(script);
-      if(json.result==="success"&&json.data&&json.data.length>0){
-        resolve(json.data.map((row,i)=>({
-          number:row["추첨 번호"]||row["추첨번호"]||i+1,
-          numbers:row["추첨번호목록"]?row["추첨번호목록"].split(",").map(n=>parseInt(n.trim())):[row["추첨 번호"]||row["추첨번호"]||i+1],
-          hall:row["볼링장 명"]||row["볼링장명"]||"",
-          name:row["참여자 이름"]||row["참여자이름"]||"",
-          phone:row["연락처"]||"",
-          date:row["참여 날짜"]||row["참여날짜"]||"",
-          score1:row["1게임 점수"]||row["1게임점수"]||"",
-          score2:row["2게임점수"]||row["2게임 점수"]||"",
-          combined:row["합산점수"]||row["합산 점수"]||"",
-          bonus:row["보너스여부"]==="Y"||false,
-          tickets:parseInt(row["추첨번호수"])||1,
-          staff:row["제출 직원"]||row["제출직원"]||"",
-          at:row["등록 일시"]||row["등록일시"]||"",
-        })));
-      }else{resolve([]);}
-    };
-    script.src=SCRIPT_URL+"?callback="+cbName;
-    document.body.appendChild(script);
-  });
-}
+  try{
+    const res=await fetch(SCRIPT_URL);
+    const json=await res.json();
+    if(json.result==="success"&&json.data&&json.data.length>0){
+      return json.data.map((row,i)=>({
+        number:row["추첨 번호"]||row["추첨번호"]||i+1,
+        numbers:row["추첨번호목록"]?row["추첨번호목록"].split(",").map(n=>parseInt(n.trim())):[row["추첨 번호"]||row["추첨번호"]||i+1],
+        hall:row["볼링장 명"]||row["볼링장명"]||"",
+        name:row["참여자 이름"]||row["참여자이름"]||"",
+        phone:row["연락처"]||"",
+        date:row["참여 날짜"]||row["참여날짜"]||"",
+        score1:row["1게임 점수"]||row["1게임점수"]||"",
+        score2:row["2게임점수"]||row["2게임 점수"]||"",
+        combined:row["합산점수"]||row["합산 점수"]||"",
+        bonus:row["보너스여부"]==="Y"||false,
+        tickets:parseInt(row["추첨번호수"])||1,
+        staff:row["제출 직원"]||row["제출직원"]||"",
+        at:row["등록 일시"]||row["등록일시"]||"",
+      }));
+    }
+    return[];
+  }catch{return[];}
 }
 async function saveParticipant(entry){
   try{await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(entry),headers:{"Content-Type":"application/json"},mode:"no-cors"});return true;}catch{return false;}
