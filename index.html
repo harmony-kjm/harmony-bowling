@@ -443,14 +443,14 @@ function App(){
               </div>
             </div>
             {/* 우측 — 추첨일 + 동기화 */}
-            <div style={{textAlign:"right",flexShrink:0,maxWidth:160}}>
+            <div style={{textAlign:"right",flexShrink:0,maxWidth:120}}>
               {round.date&&(
-                <div style={{display:"inline-flex",alignItems:"center",gap:6,
+                <div style={{display:"inline-flex",alignItems:"center",gap:4,
                   background:"linear-gradient(135deg,var(--rose4),var(--rose3))",
                   border:"1px solid var(--rose3)",borderRadius:20,
-                  padding:"5px 12px",marginBottom:4,flexWrap:"wrap",justifyContent:"flex-end"}}>
-                  <span style={{fontSize:11}}>📅</span>
-                  <span style={{fontSize:12,fontWeight:700,color:"var(--rose)",wordBreak:"keep-all"}}>추첨 {round.date}</span>
+                  padding:"4px 10px",marginBottom:4,flexWrap:"wrap",justifyContent:"flex-end"}}>
+                  <span style={{fontSize:10}}>📅</span>
+                  <span style={{fontSize:11,fontWeight:700,color:"var(--rose)",wordBreak:"keep-all"}}>추첨 {round.date}</span>
                 </div>
               )}
               <div style={{fontSize:10,color:"var(--textMute)",display:"flex",
@@ -602,7 +602,8 @@ function App(){
                           <th key={h} style={{padding:"11px 18px",
                             textAlign:h==="볼링장"?"left":"center",
                             fontSize:10,color:"var(--textMute)",fontWeight:700,
-                            textTransform:"uppercase",letterSpacing:0.8}}>{h}</th>
+                            textTransform:"uppercase",letterSpacing:0.8,
+                            whiteSpace:"nowrap"}}>{h}</th>
                         ))}
                       </tr>
                     </thead>
@@ -612,7 +613,7 @@ function App(){
                           transition:"background 0.15s"}}
                           onMouseEnter={e=>e.currentTarget.style.background="var(--cream)"}
                           onMouseLeave={e=>e.currentTarget.style.background=""}>
-                          <td style={{padding:"14px 18px",fontWeight:600,fontSize:13}}>{h.name}</td>
+                          <td style={{padding:"14px 18px",fontWeight:600,fontSize:13,wordBreak:"keep-all"}}>{h.name}</td>
                           <td style={{padding:"14px 18px",textAlign:"center",
                             color:"var(--blue)",fontWeight:700}}>{h.count}명</td>
                           <td style={{padding:"14px 18px",textAlign:"center",
@@ -730,7 +731,7 @@ function App(){
                       <div style={{fontWeight:700,fontSize:15,color:"var(--ink)",marginBottom:5}}>
                         {s.title}
                       </div>
-                      <div style={{fontSize:13,color:"var(--textSub)",lineHeight:1.7,marginBottom:5}}>
+                      <div style={{fontSize:13,color:"var(--textSub)",lineHeight:1.7,marginBottom:5,wordBreak:"keep-all"}}>
                         {s.desc}
                       </div>
                       <div style={{fontSize:11,color:"var(--textMute)",
